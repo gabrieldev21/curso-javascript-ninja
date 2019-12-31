@@ -9,10 +9,10 @@ deles seja "true", usando os Wrapper Objects como "conversores" nos valores
 das variáveis. Analise o que está sendo impresso no console para saber como
 resolver o problema corretamente.
 */
-var five = '5';
+var five = Number('5');
 console.log( five + ' é número?', typeof five === 'number' );
 
-var concat = 10 + 10;
+var concat = String(10) + 10;
 console.log( '"' + concat + '" é uma string? E é igual a "1010"?', typeof concat === 'string' );
 
 /*
@@ -24,7 +24,14 @@ funcional, mas dessa vez, separando algumas responsabilidades.
 função receberá dois parâmetros e retornará a operação referente à sua
 propriedade, usando os valores passados por parâmetro.
 */
-// ?
+/* function operation */ 
+var operation = { 
+    '+': function soma(Number1,Number2) { return Number1 + Number2; },
+    '-': function subtracao(Number1,Number2) { return Number1 - Number2; },
+    '*': function multiplicacao(Number1,Number2) { return Number1 * Number2; },
+    '/': function division(Number1,Number2) { return Number1 / Number2; },
+    '%': function mod(Number1,Number2) { return Number1 % Number2; }
+  };
 
 /*
 Crie uma função chamada `isOperatorValid`, que receberá um operador por
@@ -36,7 +43,12 @@ parâmetro a ela é válido, ou seja, se ele é igual a '+', '-', '*', '/' ou
 Caso contrário, "false".
 - O desafio é fazer o retorno sem usar "if" ou "switch".
 */
-// ?
+function isOperatorValid ( operador ) {
+    return !!operation[operador] ;
+}
+
+        console.log( isOperatorValid('+') )
+    
 
 /*
 Agora vamos criar a calculadora.
@@ -50,7 +62,23 @@ parâmetros;
 operador passado para a função "calculator", e passando para esse método
 os dois parâmetros da função de retorno de "calculator".
 */
-// ?
+function calculator ( operador  ) {
+    if (  !isOperatorValid( operador )  ){
+        return false;
+        } 
+
+    return function ( x, y ) {
+
+        if (  typeof x !==  'number' || typeof y !==  'number' ) {
+            
+            return false;
+
+        } 
+          return operation [ operador ] ( x, y );
+    
+    };
+};
+
 
 /*
 Crie uma função chamada "showOperationMessage" que recebe três parâmetros:
@@ -59,7 +87,10 @@ deve ser a frase:
 'A operação [NUMBER1] [OPERATOR] [NUMBER2] =';
 Essa função mostrará a mensagem da operação que criaremos mais abaixo.
 */
-// ?
+    
+    function showOperationMessage ( operator , number1 , number2 ){
+    return 'A operação ' + number1 + ' ' + operator + ' ' + number2 + ' =' ;
+    } 
 
 /*
 Crie uma função chamada "showErrorMessage" que recebe um parâmetro: o
@@ -67,7 +98,9 @@ operador da operação cálculo, quando a operação não for válida.
 Essa função deverá retornar a frase:
 'Operação "[OPERATOR]" não permitida!'
 */
-// ?
+function showErrorMessage ( operator ) {
+    return  'Operação ' + operator + ' não permitida!' ;
+}
 
 /*
 Nossa calculadora está pronta! Agora vamos testá-la:
