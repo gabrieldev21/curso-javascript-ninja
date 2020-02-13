@@ -1,5 +1,5 @@
 (function (window, document) {
-    'use scrict'
+    'use strict'
 
     /*
 1. Envolva todo o conteúdo desse desafio em uma IIFE.
